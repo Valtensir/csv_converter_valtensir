@@ -1,0 +1,52 @@
+[
+    {
+        "apn": null,
+        "zip_code": 91007,
+        "property_type": "residential",
+        "lot": 20492,
+        "sqft": 2991,
+        "beds": 4,
+        "baths": 2.5,
+        "price": 2168000
+    },
+    {
+        "apn": "06037-5436013020",
+        "zip_code": 90039,
+        "property_type": "residential",
+        "lot": 6752,
+        "sqft": 1533,
+        "beds": 3,
+        "baths": 2,
+        "price": 898000
+    },
+    {
+        "apn": "06037-2549013007",
+        "zip_code": 91040,
+        "property_type": "residential",
+        "lot": 38757,
+        "sqft": 3146,
+        "beds": 4,
+        "baths": 4,
+        "price": 998999
+    },
+    {
+        "apn": "06059-03318106",
+        "zip_code": 92831,
+        "property_type": "residential",
+        "lot": 6375,
+        "sqft": 1364,
+        "beds": 3,
+        "baths": 1,
+        "price": 549000
+    },
+    {
+        "apn": "06059-93279051",
+        "zip_code": 92637,
+        "property_type": "residential",
+        "lot": 1700,
+        "sqft": 1592,
+        "beds": 3,
+        "baths": 2,
+        "price": 69999
+    }
+]

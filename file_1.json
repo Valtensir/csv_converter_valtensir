@@ -1,0 +1,22 @@
+[
+    {
+        "apn": "06037-8634004018",
+        "zip_code": 91741,
+        "property_type": "residential",
+        "lot": 6969,
+        "sqft": 1600,
+        "beds": 4,
+        "baths": 3,
+        "price": 560000
+    },
+    {
+        "apn": "06071-1089321220000",
+        "zip_code": 91739,
+        "property_type": "residential",
+        "lot": 8690,
+        "sqft": 1340,
+        "beds": 3,
+        "baths": 2,
+        "price": null
+    }
+]
