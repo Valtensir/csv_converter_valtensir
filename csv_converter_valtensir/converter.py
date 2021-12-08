@@ -119,7 +119,7 @@ def save_to_json_file(csvs: tuple, output_path: Path, prefix: str = None, delimi
         header = csvs[i].readline().rstrip("\n").split(delimiter)
         dic_list = []
 
-        file = open(file_name, "w")
+        file = open(output, "w")
 
         for line in csvs[i]:
             dictionary = {}
@@ -158,7 +158,7 @@ def save_to_csv_file(jsons: tuple, output_path: Path, prefix: str = None, delimi
         file_name = f"{prefix}_{i}.csv"
         output = output_path.joinpath(file_name)
         logger.info("Saving file as %s", output)
-        file = open(file_name, "w")
+        file = open(output, "w")
         obj_list = json.loads(jsons[i].read())
 
         keys_list = list(obj_list[0].keys())
@@ -182,4 +182,3 @@ def save_to_csv_file(jsons: tuple, output_path: Path, prefix: str = None, delimi
         file.close()
 
         i += 1
-

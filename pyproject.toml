@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "csv_converter_valtensir"
-version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+version = "0.1.2"
+description = "A project to converter JSON to CSV and CSV to JSON files."
+authors = ["Valtensir Lopes <valtensirl@gmail.com>"]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
