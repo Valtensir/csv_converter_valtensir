@@ -1,5 +1,7 @@
 import logging
 from pathlib import Path
+import pathlib
+from typing import ClassVar
 import click
 import json
 
@@ -60,20 +62,19 @@ def converter(convert: str="cc", input: str="./", output: str="./", delimiter: s
     for p in [input_path, output_path]:
         if not (p.is_file() or p.is_dir):
             raise TypeError("Not a valid path of file name.")
-
+        
+    data = read_file(source=input_path)
     if convert == "cc":    
-        data = read_csv_file(source=input_path, delimiter=delimiter)
         save_to_json_file(csvs=data, output_path=output_path, prefix=prefix, delimiter=delimiter)
     elif convert == "cj":
-        data = read_csv_file(source=input_path, delimiter=delimiter)
-        save_to_json_file(csvs=data, output_path=output_path, prefix=prefix, delimiter=delimiter)
+        save_to_csv_file(jsons=data, output_path=output_path, prefix=prefix, delimiter=delimiter)
     else:
         raise TypeError("Not a valid file format")
 
 
 
-def read_csv_file(source: Path, delimiter: str=",") -> tuple:
-    """ Load a single .csv file or all files withing a directory.
+def read_file(source: Path) -> tuple:
+    """ Load a single file (csv or json) or all files withing a directory.
 
     Args:
         source(Path): Path for a single file or directory with files.
@@ -82,7 +83,7 @@ def read_csv_file(source: Path, delimiter: str=",") -> tuple:
         tuple: All dataframes loaded from the given source path.
     """
     if source.is_file():
-        logger.info("Reading csv file %s", source)
+        logger.info("Reading file %s", source)
         file = open(source, "r")
         data = list()
         data.append(file)
@@ -99,24 +100,27 @@ def read_csv_file(source: Path, delimiter: str=",") -> tuple:
 
 
 def save_to_json_file(csvs: tuple, output_path: Path, prefix: str = None, delimiter: str=","):
-    """ Save dataframes to disk
+    """ Save dictionarys to disk
 
     Args:
-        csvs (tuple): Tuple with dataframes that will be converted.
+        csvs (tuple): Tuple with _io.TextIOWrapper types that will be converted.
         output_path (Path): Path where to save the .json files.
         prefix (str, optional): Name to prepend to files.
         if nothing is given, it will use 'file_'. Defaults to None.
     """
     i = 0
     while i < len(csvs):
+        
         file_name = f"{prefix}_{i}.json"
         output = output_path.joinpath(file_name)
         logger.info("Saving file as %s", output)
 
+        
         header = csvs[i].readline().rstrip("\n").split(delimiter)
         dic_list = []
-        
+
         file = open(file_name, "w")
+
         for line in csvs[i]:
             dictionary = {}
             str_line = line.rstrip("\n").split(delimiter)
@@ -138,3 +142,44 @@ def save_to_json_file(csvs: tuple, output_path: Path, prefix: str = None, delimi
         file.close()
 
         i += 1
+
+
+def save_to_csv_file(jsons: tuple, output_path: Path, prefix: str = None, delimiter: str=","):
+    """ Save dataframes to disk
+
+    Args:
+        jsons (tuple): Tuple with _io.TextIOWrapper that will be converted.
+        output_path (Path): Path where to save the .json files.
+        prefix (str, optional): Name to prepend to files.
+        if nothing is given, it will use 'file_'. Defaults to None.
+    """
+    i = 0
+    while i < len(jsons):
+        file_name = f"{prefix}_{i}.csv"
+        output = output_path.joinpath(file_name)
+        logger.info("Saving file as %s", output)
+        file = open(file_name, "w")
+        obj_list = json.loads(jsons[i].read())
+
+        keys_list = list(obj_list[0].keys())
+        list_to_str = ','.join([str(key) for key in keys_list])
+            
+        file.write(list_to_str + "\n")
+
+        for dicio in obj_list:
+            value_list = list()
+            j = 0
+            while j < len(keys_list):
+                if dicio[keys_list[j]] != None:
+                    value_list.append(dicio[keys_list[j]])
+                else:
+                    value_list.append("")
+                j += 1
+                
+            value_list_str = ','.join([str(value) for value in value_list])
+            file.write(value_list_str  + "\n")
+            
+        file.close()
+
+        i += 1
+
